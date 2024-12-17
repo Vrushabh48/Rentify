@@ -12,3 +12,41 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  id Int @id @default(autoincrement())
+  name String?
+  email String @unique
+  phone String?
+  age Int?
+  gender Gender?
+  password String
+  items Items[]
+  reviews Reviews[]
+}
+
+model Items{
+  id Int @id @default(autoincrement())
+  name String
+  description String?
+  imgLink String?
+  rent_amount Int?
+  rentedFor Int?
+  location String?
+  UserId Int
+  user User @relation(fields: [UserId], references: [id])
+  reviews Reviews[]
+}
+
+model Reviews{
+  id Int @id @default(autoincrement())
+  userId Int 
+  user User @relation(fields: [userId], references: [id])
+  itemId Int
+  item Items @relation(fields: [itemId], references: [id])
+}
+
+enum Gender {
+  Male
+  Female
+}

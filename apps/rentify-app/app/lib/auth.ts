@@ -40,10 +40,26 @@ export const authOptions = {
                             password: credentials.password
                         }
                     })
+                    return {
+                        id: user.id.toString(),
+                        name: user.name,
+                        email: user.email
+                    }
                 } catch (e) {
                     console.log(e);
                 }
-              }
+
+                return null;
+              },
         })
-    ]
+    ],
+    secret: process.env.JWT_SECRET || "secret",
+    callbacks: {
+        async session({token, session}: any) {
+            session.user.id = token.sub
+
+            return session;
+        }
+        
+    }
 }

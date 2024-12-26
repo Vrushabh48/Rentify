@@ -1,7 +1,7 @@
 "use server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../db";
 
 export const GET = async () => {
@@ -34,3 +34,42 @@ export const GET = async () => {
 
   return NextResponse.json({ profile }); // Correct API response format
 };
+
+
+export const POST = async (req: NextRequest) => {
+    const session = await getServerSession(authOptions);
+
+    if(!session){
+        return NextResponse.json({
+            message: "You are not logged in!",
+        },{
+            status: 401
+        })
+    }
+
+    try {
+        const body = await req.json();
+        const { profile } = body;
+  
+        // Merge the updated profile data
+        const update = await prisma.user.update({
+            where: {
+                id: parseInt(session.user.id)
+            },
+            data: profile
+        })
+
+        console.log(update);
+  
+        return NextResponse.json(
+            {
+              message: 'Profile updated successfully',
+              profile: update,
+            },
+            { status: 200 }
+          );
+      } catch (error) {
+        console.log(error);
+      }
+
+}

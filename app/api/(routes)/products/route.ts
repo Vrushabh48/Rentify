@@ -35,3 +35,22 @@ export const POST = async (req: NextRequest) => {
     }
 
 }
+
+export const GET = async () => {
+    const session = await getServerSession(authOptions);
+
+    if(!session){
+        return NextResponse.json({
+            message: "You are Not logged in!"
+        })
+    }
+
+    try {
+        const products = await prisma.items.findMany();
+        return NextResponse.json({
+            products
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -29,11 +29,32 @@ export default function Profile() {
   const handleEditToggle = () => {
     setIsEditing(true);
   };
-//@ts-ignore
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData({ ...profileData, [name]: value });
-  };
+
+const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  const { name, value } = e.target;
+
+  // Convert `age` to a number if the field being updated is `age`
+  setProfileData({
+    ...profileData,
+    [name]: name === "age" ? Number(value) : value,
+  });
+};
+
+const handleagechange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  const { name, value } = e.target;
+
+  // Convert `age` to a number if the field being updated is `age`
+  setProfileData({
+    ...profileData,
+    [name]: name === "age" ? Number(value) : value,
+  });
+};
+
+
 
   const handleSaveChanges = async () => {
     try {
@@ -89,8 +110,8 @@ export default function Profile() {
                 type="number"
                 id="age"
                 name="age"
-                value={profileData.age || ""}
-                onChange={handleInputChange}
+                value={profileData.age || 0}
+                onChange={handleagechange}
               />
             </div>
             <div>

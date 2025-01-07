@@ -18,8 +18,17 @@ export default function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/products");
-        setProductData(data.products || []); // Ensure fallback to empty array
+        const cachedData = localStorage.getItem("productData");
+        if (cachedData) {
+          // Use cached data if available
+          setProductData(JSON.parse(cachedData));
+        } else {
+          // Fetch from API if no cache exists
+          const { data } = await axios.get("http://localhost:3000/api/products");
+          const products = data.products || [];
+          setProductData(products);
+          localStorage.setItem("productData", JSON.stringify(products));
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
       }

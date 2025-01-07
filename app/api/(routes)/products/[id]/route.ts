@@ -1,26 +1,26 @@
-// pages/api/products/[id].ts
 import { authOptions } from "@/app/lib/auth";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/db";
 
-export const GET = async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = async (req: NextRequest, context: { params: { id: string } }) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
     return NextResponse.json({
-      message: "You are Not logged in!",
-    });
+      message: "You are not logged in!",
+    }, { status: 401 });
   }
 
-  const { id } = params;
+  // Await params before destructuring
+  const { id } = await context.params;
 
   try {
     const product = await prisma.items.findUnique({
-      where: { id: parseInt(id, 10) },
+      where: { id: parseInt(id, 10) }, // Ensure ID is parsed as an integer
       include: {
-        User: true, // Include user details if needed
-        Reviews: true, // Include reviews if needed
+        User: true,     // Include user details if needed
+        Reviews: true,  // Include reviews if needed
       },
     });
 

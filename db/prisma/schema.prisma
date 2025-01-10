@@ -8,36 +8,51 @@ datasource db {
 }
 
 model Items {
-  id          Int       @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   name        String
   description String?
   imgLink     String?
   rent_amount Int?
-  rentedFor   Int?
+  deposit     Int?
+  isRented    Boolean      @default(false)
   location    String?
   UserId      Int
-  User        User      @relation(fields: [UserId], references: [id])
+  User        User         @relation(fields: [UserId], references: [id])
   Reviews     Reviews[]
+  RentedItems RentedItem[] @relation("ItemRentals")
+}
+
+model RentedItem {
+  id       Int   @id @default(autoincrement())
+  itemId   Int
+  renterId Int
+  startDate DateTime
+  endDate DateTime
+  approved_status Boolean @default(false)
+  Items    Items @relation("ItemRentals", fields: [itemId], references: [id])
+  Renter   User  @relation("RenterRelation", fields: [renterId], references: [id])
 }
 
 model Reviews {
-  id     Int   @id @default(autoincrement())
+  id     Int    @id @default(autoincrement())
   userId Int
+  review String
   itemId Int
-  Items  Items @relation(fields: [itemId], references: [id])
-  User   User  @relation(fields: [userId], references: [id])
+  Items  Items  @relation(fields: [itemId], references: [id])
+  User   User   @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
+  id       Int          @id @default(autoincrement())
   name     String?
-  email    String    @unique
+  email    String       @unique
   phone    String?
   age      Int?
   gender   Gender?
   password String
   Items    Items[]
   Reviews  Reviews[]
+  Rentals  RentedItem[] @relation("RenterRelation") // Rentals as a Renter
 }
 
 enum Gender {

@@ -3,7 +3,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Image from "next/image";
 
 interface ProductDetails {
   id: number;
@@ -54,13 +53,7 @@ export default function ProductDetailsPage() {
       {/* Display product image if available */}
       {productDetails.imgLink && (
         <div className="mb-6 relative w-full h-64">
-          <Image
-            src={productDetails.imgLink} // Fixed to reference productDetails.imgLink
-            alt={productDetails.name}
-            layout="fill" // Ensures the image covers the container
-            objectFit="cover" // Ensures proper scaling and cropping of the image
-            className="rounded-t-lg" // Applies rounded corners to the top of the card
-          />
+          <img src={productDetails.imgLink} jsaction="" class="sFlh5c FyHeAf iPVvYb" style="max-width: 570px; height: 72px; margin: 0px; width: 99px;" alt="camera Archives - TrickyPhotoshop" jsname="kn3ccd" aria-hidden="false" />
         </div>
       )}
 
@@ -80,7 +73,7 @@ export default function ProductDetailsPage() {
       {/* Optional button or navigation to take action */}
       <div className="mt-6 text-center">
         <button
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/products")}
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           Back to Products

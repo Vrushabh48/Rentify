@@ -13,6 +13,9 @@ model Items {
   description String?
   imgLink     String?
   rent_amount Int?
+  min_days    Int?
+  address     String
+  rentedfor   Int?         @default(0)
   deposit     Int?
   isRented    Boolean      @default(false)
   location    String?
@@ -23,20 +26,21 @@ model Items {
 }
 
 model RentedItem {
-  id       Int   @id @default(autoincrement())
-  itemId   Int
-  renterId Int
-  startDate DateTime
-  endDate DateTime
-  approved_status Boolean @default(false)
-  Items    Items @relation("ItemRentals", fields: [itemId], references: [id])
-  Renter   User  @relation("RenterRelation", fields: [renterId], references: [id])
+  id              Int      @id @default(autoincrement())
+  itemId          Int
+  renterId        Int
+  startDate       DateTime
+  endDate         DateTime
+  approved_status Boolean  @default(false)
+  Items           Items    @relation("ItemRentals", fields: [itemId], references: [id])
+  Renter          User     @relation("RenterRelation", fields: [renterId], references: [id])
 }
 
 model Reviews {
   id     Int    @id @default(autoincrement())
   userId Int
   review String
+  rating Float?
   itemId Int
   Items  Items  @relation(fields: [itemId], references: [id])
   User   User   @relation(fields: [userId], references: [id])

@@ -102,7 +102,7 @@ export default function AddProduct() {
           placeholder="Amount"
           id="rent_amount"
           required
-          value={product.rent_amount || ""}
+          value={product.rent_amount || 0}
           onChange={handleInputChange}
         />
       </div>

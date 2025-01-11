@@ -16,15 +16,20 @@ export const POST = async (req: NextRequest) => {
     const body = await req.json();
     const { productData } = body; 
     const product = await prisma.items.create({
-        data:{
-            name: productData.name,
-            description: productData.description,
-            rent_amount: productData.rent_amount,
-            location: productData.location,
-            UserId: parseInt(session.user.id)
-        }
-    })
-
+        data: {
+          name: productData.name,
+          description: productData.description,
+          rent_amount: productData.rent_amount,
+          location: productData.location,
+          imgLink: productData.imgLink,
+          address: productData.address,
+          deposit: productData.deposit,
+          UserId: parseInt(session.user.id),
+          ...(productData.min_days && { min_days: productData.min_days }), // Add `min_days` only if it exists
+        },
+      });
+      
+    //logging the product added
     console.log(product);
     return NextResponse.json({
         message: "Product Added Successfully",

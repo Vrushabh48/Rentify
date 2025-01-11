@@ -7,8 +7,12 @@ import { useEffect, useState } from "react";
 interface Product {
   id: number;
   name: string;
+  category: string;
   description: string;
   rent_amount: number;
+  deposit: number;
+  address: string;
+  imgLink: string;
   location: string;
 }
 

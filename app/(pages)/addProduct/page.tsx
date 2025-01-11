@@ -6,8 +6,13 @@ import axios from "axios";
 export default function AddProduct() {
   const [product, setProduct] = useState({
     name: "",
+    category: "",
     description: "",
     rent_amount: 0,
+    imgLink: "",
+    address: "",
+    min_days: 0,
+    deposit: 0,
     location: "",
   });
 
@@ -18,6 +23,7 @@ export default function AddProduct() {
     setProduct({
       ...product,
       [name]: name === "rent_amount" ? parseInt(value) || 0 : value,
+      [name]: name === "deposit" ? parseInt(value) || 0 : value,
     });
   };
   
@@ -34,8 +40,13 @@ export default function AddProduct() {
 
       setProduct({
         name: "",
+        category: "",
         description: "",
         rent_amount: 0,
+        imgLink: "",
+        address: "",
+        min_days: 0,
+        deposit: 0,
         location: "",
       });
     } catch (error) {
@@ -60,6 +71,18 @@ export default function AddProduct() {
         />
       </div>
       <div>
+        <label htmlFor="category">Category</label>
+        <input
+          type="text"
+          name="category"
+          placeholder="Category"
+          id="category"
+          required
+          value={product.category}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
         <label htmlFor="description">Description</label>
         <input
           type="text"
@@ -80,6 +103,42 @@ export default function AddProduct() {
           id="rent_amount"
           required
           value={product.rent_amount || ""}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="imgLink">Image URL</label>
+        <input
+          type="text"
+          name="imgLink"
+          placeholder="Image URL"
+          id="imgLink"
+          required
+          value={product.imgLink || ""}
+          onChange={ handleInputChange }
+        />
+      </div>
+      <div>
+        <label htmlFor="address">Address</label>
+        <input
+          type="tsxt"
+          name="address"
+          placeholder="Address"
+          id="address"
+          required
+          value={product.address || ""}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="deposit">Deposit</label>
+        <input
+          type="number"
+          name="deposit"
+          placeholder="Deposit"
+          id="deposit"
+          required
+          value={product.deposit || ""}
           onChange={handleInputChange}
         />
       </div>

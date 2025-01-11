@@ -10,6 +10,7 @@ datasource db {
 model Items {
   id          Int          @id @default(autoincrement())
   name        String
+  category    String
   description String?
   imgLink     String?
   rent_amount Int?

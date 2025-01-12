@@ -65,3 +65,36 @@ export const POST = async (req: NextRequest) => {
     );
   }
 };
+
+
+export const GET = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      {
+        message: "You are Not Logged in!",
+      },
+      { status: 401 }
+    );
+  }
+
+ try {
+  const approvalRequest = await prisma.rentedItem.findMany({
+    where: {renterId: parseInt(session.user.id),
+      approved_status:false
+    }
+  })
+
+  return NextResponse.json(
+    {approvalRequest}
+  )
+ } catch (error) {
+  console.log(error);
+  return NextResponse.json(
+    {message: "An Error Occured"},
+    { status: 500}
+  );
+ }
+  
+}

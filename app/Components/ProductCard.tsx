@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Image from "next/image"; // Import the Image component
 
 interface ProductCardProps {
   productDataprop: {
@@ -31,16 +30,10 @@ export function ProductCard({ productDataprop }: ProductCardProps) {
   return (
     <div
       onClick={handleClick}
-      className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl"
+      className="max-w-sm w-full bg-emerald-100 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl"
     >
-      <div className="relative w-full h-48">
-        <Image
-          src={imgLink}
-          alt={name}
-          layout="fill" // Ensures the image covers the container
-          objectFit="cover" // Ensures proper scaling and cropping of the image
-          className="rounded-t-lg" // Applies rounded corners to the top of the card
-        />
+      <div className="relative w-full h-48 items-center">
+      <img src={imgLink} className="h-[200px] w-[400px]" alt="camera Archives - TrickyPhotoshop" aria-hidden="false" />
       </div>
       <div className="p-4">
         <h2 className="text-xl font-semibold text-gray-800">{name}</h2>

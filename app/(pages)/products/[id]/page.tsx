@@ -3,6 +3,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface ProductDetails {
   id: number;
@@ -19,6 +21,8 @@ interface ProductDetails {
 export default function ProductDetailsPage() {
   const [productDetails, setProductDetails] = useState<ProductDetails | null>(null);
   const [loading, setLoading] = useState(true);
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const router = useRouter();
   const params = useParams(); // Use the `useParams` hook
 
@@ -48,12 +52,36 @@ export default function ProductDetailsPage() {
 
   if (!productDetails) return <div className="text-center text-xl">Product not found.</div>;
 
+  const handleRequest = async () => {
+    try {
+      // Validate the input dates
+      if (!startDate || !endDate) {
+        alert("Please select a valid date range.");
+        return;
+      }
+  
+      // Send the rent request to the backend
+      const response = await axios.post("http://localhost:3000/api/rent", {
+        itemId: productDetails?.id,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      });
+  
+      // Show success message
+      alert("Request for rent sent to owner successfully.");
+      console.log("Request response:", response.data);
+    } catch (error) {
+      console.error("Error sending rent request:", error);
+      alert("Failed to send the rent request. Please try again.");
+    }
+  };
+  
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
       {/* Display product image if available */}
       {productDetails.imgLink && (
         <div className="mb-6 relative w-full h-64">
-          <img src={productDetails.imgLink} jsaction="" class="sFlh5c FyHeAf iPVvYb" style="max-width: 570px; height: 72px; margin: 0px; width: 99px;" alt="camera Archives - TrickyPhotoshop" jsname="kn3ccd" aria-hidden="false" />
+          <img src={productDetails.imgLink} className="h-[200px] w-[300px]" alt="camera Archives - TrickyPhotoshop" aria-hidden="false" />
         </div>
       )}
 
@@ -77,6 +105,54 @@ export default function ProductDetailsPage() {
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           Back to Products
+        </button>
+      </div>
+      <div className="mt-6 text-center">
+        <div>
+          <div style={{ padding: "20px", textAlign: "center" }}>
+                <h2>Date Range Picker</h2>
+                <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+                  {/* Start Date Picker */}
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date: Date | null) => setStartDate(date ?? undefined)}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    placeholderText="Start Date"
+                    dateFormat="yyyy/MM/dd"
+                  />
+                  
+                  {/* End Date Picker */}
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date: Date | null) => setEndDate(date ?? undefined)}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    placeholderText="End Date"
+                    dateFormat="yyyy/MM/dd"
+                  />
+                </div>
+          
+                <div style={{ marginTop: "20px" }}>
+                  {startDate && endDate ? (
+                    <p>
+                      Selected Range: {startDate.toLocaleDateString()} -{" "}
+                      {endDate.toLocaleDateString()}
+                    </p>
+                  ) : (
+                    <p>Select a date range</p>
+                  )}
+                </div>
+              </div>
+        </div>
+        <button
+        onClick={handleRequest}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Request For Rent
         </button>
       </div>
     </div>

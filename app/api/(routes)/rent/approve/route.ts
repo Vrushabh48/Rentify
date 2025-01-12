@@ -47,9 +47,15 @@ export const POST = async (req: NextRequest) => {
       data: { approved_status: true },
     });
 
+    const isrentedStatus = await prisma.items.update({
+      where: {id: updatedRequest.itemId},
+      data: {isRented: true}
+    })
+
     return NextResponse.json({
       message: "Rent request approved successfully",
       updatedRequest,
+      isrentedStatus
     });
   } catch (error) {
     console.error(error);

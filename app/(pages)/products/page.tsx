@@ -14,6 +14,7 @@ interface Product {
   address: string;
   imgLink: string;
   location: string;
+  isRented: boolean;
 }
 
 export default function Products() {

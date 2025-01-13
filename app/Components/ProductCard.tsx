@@ -13,6 +13,7 @@ interface ProductCardProps {
     deposit: number; // Change to number
     rent_amount: number;
     location: string;
+    isRented: boolean
   };
 }
 
@@ -25,7 +26,7 @@ export function ProductCard({ productDataprop }: ProductCardProps) {
     router.push(`/products/${productDataprop.id}`);
   };
 
-  const { name, description, rent_amount, location, imgLink } = productDataprop;
+  const { name, description, rent_amount, location, imgLink, isRented } = productDataprop;
 
   return (
     <div
@@ -43,6 +44,16 @@ export function ProductCard({ productDataprop }: ProductCardProps) {
           <p className="text-sm text-gray-500">Location: {location}</p>
         </div>
       </div>
+      <div>
+  {isRented ? (
+    // Content to render if `isRented` is true
+    <p>This item is currently rented.</p>
+  ) : (
+    // Content to render if `isRented` is false
+    <p>This item is available for rent.</p>
+  )}
+</div>
+
       <div className="bg-gray-100 p-4">
         <p className="text-sm text-gray-500">{productDataprop.category}</p>
       </div>

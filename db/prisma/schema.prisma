@@ -33,7 +33,7 @@ model RentedItem {
   ownerId         Int
   startDate       DateTime
   endDate         DateTime
-  approved_status Boolean
+  approved_status Boolean?
   Items           Items    @relation("ItemRentals", fields: [itemId], references: [id])
   Owner           User     @relation("OwnerRelation", fields: [ownerId], references: [id])
   Renter          User     @relation("RenterRelation", fields: [renterId], references: [id])

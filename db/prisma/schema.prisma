@@ -30,10 +30,12 @@ model RentedItem {
   id              Int      @id @default(autoincrement())
   itemId          Int
   renterId        Int
+  ownerId         Int
   startDate       DateTime
   endDate         DateTime
-  approved_status Boolean  @default(false)
+  approved_status Boolean
   Items           Items    @relation("ItemRentals", fields: [itemId], references: [id])
+  Owner           User     @relation("OwnerRelation", fields: [ownerId], references: [id])
   Renter          User     @relation("RenterRelation", fields: [renterId], references: [id])
 }
 
@@ -58,7 +60,9 @@ model User {
   Items    Items[]
   Reviews  Reviews[]
   Rentals  RentedItem[] @relation("RenterRelation") // Rentals as a Renter
+  Owner    RentedItem[] @relation("OwnerRelation")  // Rentals as an Owner
 }
+
 
 enum Gender {
   Male

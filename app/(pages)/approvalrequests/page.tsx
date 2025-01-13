@@ -8,9 +8,10 @@ interface Product {
   id: number;
   itemId: number;
   renterId: number;
-  startDate: Date;
+  ownerId: number;
+  startDate: Date; // Keep this as string if dates are in ISO format
   endDate: Date;
-  approved_status: boolean;
+  approved_status: boolean | null; // Include null for pending approvals
 }
 
 export default function ApprovalRequest() {
@@ -20,7 +21,7 @@ export default function ApprovalRequest() {
     const fetchApprovalRequest = async () => {
       try {
         const { data } = await axios.get("http://localhost:3000/api/rent/approve");
-        setProductDetails(data);
+        setProductDetails(data.approvalRequest); // Extract approvalRequest from the response
       } catch (error) {
         console.log("Error Fetching the Approval Requests", error);
       }

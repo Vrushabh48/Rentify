@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/router";
+import axios from "axios";
 
 interface ApprovalCardProp {
   productDataProp: {
@@ -13,25 +13,36 @@ interface ApprovalCardProp {
 }
 
 export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
-  const router = useRouter();
 
   const { itemId, renterId, startDate, endDate } = productDataProp;
 
-  const handleApprove = () => {
-    // Add API call for approval logic here
-    console.log(`Approved request for item ${itemId} by renter ${renterId}`);
-    // Redirect or update state as needed
+  const handleApprove = async () => {
+    try {
+      await axios.post("http://localhost:3000/api/rent/approve/accept", {
+        itemId,
+      });
+      alert("Request Approved Successfully");
+      console.log(`Approved request for item ${itemId} by renter ${renterId}`);
+    } catch (error) {
+      console.error("Error approving request:", error);
+      alert("Failed to approve the request. Please try again.");
+    }
   };
-
-  const handleReject = () => {
-    // Add API call for rejection logic here
-    console.log(`Rejected request for item ${itemId} by renter ${renterId}`);
-    // Redirect or update state as needed
+  
+  
+  const handleReject = async () => {
+    try {
+      await axios.post("http://localhost:3000/api/rent/approve/reject", {
+        itemId,
+      });
+      alert("Request Rejected Successfully");
+      console.log(`Rejected request for item ${itemId} by renter ${renterId}`);
+    } catch (error) {
+      console.error("Error rejecting request:", error);
+      alert("Failed to reject the request. Please try again.");
+    }
   };
-
-  const handleReturn = () => {
-    router.push('/products')
-  };
+  
 
   return (
     <div className="border rounded-lg p-4 shadow-md">
@@ -62,14 +73,6 @@ export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
           className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
         >
           Reject
-        </button>
-      </div>
-      <div>
-      <button
-          onClick={handleReturn}
-          className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-red-600"
-        >
-          Return to Products Page
         </button>
       </div>
     </div>

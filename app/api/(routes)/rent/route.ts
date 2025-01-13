@@ -64,6 +64,7 @@ export const POST = async (req: NextRequest) => {
       data: {
         itemId,
         renterId: parseInt(session.user.id),
+        ownerId: item.UserId,
         startDate: new Date(startDate), // Ensure dates are properly formatted
         endDate: new Date(endDate),     // Ensure dates are properly formatted
       },

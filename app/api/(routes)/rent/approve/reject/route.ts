@@ -17,11 +17,11 @@ export const POST = async (req: NextRequest) => {
 
   try {
     const body = await req.json();
-    const { rentedItemId } = body;
+    const { itemId } = body;
 
     // Fetch the rent request
     const rentRequest = await prisma.rentedItem.findUnique({
-      where: { id: rentedItemId },
+      where: { id: itemId },
     });
 
     if (!rentRequest) {
@@ -41,7 +41,7 @@ export const POST = async (req: NextRequest) => {
 
     // Update the approved_status to false
     const updatedRequest = await prisma.rentedItem.update({
-      where: { id: rentedItemId },
+      where: { id: itemId },
       data: { approved_status: false },
     });
 

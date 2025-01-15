@@ -9,17 +9,17 @@ interface ApprovalCardProp {
     renterId: number;
     startDate: Date;
     endDate: Date;
+    approved_status: boolean | null;
   };
 }
 
-export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
+export function StatusCard({ productDataProp }: ApprovalCardProp) {
+  const { itemId, renterId, startDate, endDate, approved_status } = productDataProp;
 
-  const {id, itemId, renterId, startDate, endDate } = productDataProp;
-
-  const handleApprove = async () => {
+  const handleApproveedOK = async () => {
     try {
-      await axios.post("http://localhost:3000/api/rent/approve/accept", {
-       id ,
+      await axios.post("http://localhost:3000/api/rent/approve/status/accepted", {
+        itemId,
       });
       alert("Request Approved Successfully");
       console.log(`Approved request for item ${itemId} by renter ${renterId}`);
@@ -28,12 +28,11 @@ export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
       alert("Failed to approve the request. Please try again.");
     }
   };
-  
-  
-  const handleReject = async () => {
+
+  const handleRejectedOK = async () => {
     try {
-      await axios.post("http://localhost:3000/api/rent/approve/reject", {
-        id,
+      await axios.post("http://localhost:3000/api/rent/approve/status/rejected", {
+        itemId,
       });
       alert("Request Rejected Successfully");
       console.log(`Rejected request for item ${itemId} by renter ${renterId}`);
@@ -42,7 +41,6 @@ export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
       alert("Failed to reject the request. Please try again.");
     }
   };
-  
 
   return (
     <div className="border rounded-lg p-4 shadow-md">
@@ -62,18 +60,20 @@ export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
         </p>
       </div>
       <div className="flex justify-end mt-4 gap-4">
-        <button
-          onClick={handleApprove}
-          className="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600"
-        >
-          Approve
-        </button>
-        <button
-          onClick={handleReject}
-          className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-        >
-          Reject
-        </button>
+        {approved_status === null ? (
+          <span className="text-yellow-500 font-semibold">Pending</span>
+        ) : (
+          <button
+            onClick={approved_status ? handleApproveedOK : handleRejectedOK}
+            className={`py-1 px-3 rounded text-white ${
+              approved_status
+                ? "bg-green-500 hover:bg-green-600"
+                : "bg-red-500 hover:bg-red-600"
+            }`}
+          >
+            OK
+          </button>
+        )}
       </div>
     </div>
   );

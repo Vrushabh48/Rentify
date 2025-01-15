@@ -8,20 +8,22 @@ export const POST = async (req: NextRequest) => {
 
   if (!session) {
     return NextResponse.json(
-      {
-        message: "You are Not Logged in!",
-      },
+      { message: "You are Not Logged in!" },
       { status: 401 }
     );
   }
 
   try {
+    // Get the JSON body from the request
     const body = await req.json();
     const { itemId } = body;
 
-    // Fetch the rent request
-    const rentRequest = await prisma.rentedItem.findUnique({
-      where: { id: itemId },
+    // Fetch the rent request by itemId
+    const rentRequest = await prisma.rentedItem.findFirst({
+      where: {
+        id: itemId,
+       ownerId: parseInt(session.user.id),
+      },
     });
 
     if (!rentRequest) {
@@ -39,9 +41,9 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    // Update the approved_status to false
+    // Update the approved_status to false (reject)
     const updatedRequest = await prisma.rentedItem.update({
-      where: { id: itemId },
+      where: { id: rentRequest.id },
       data: { approved_status: false },
     });
 

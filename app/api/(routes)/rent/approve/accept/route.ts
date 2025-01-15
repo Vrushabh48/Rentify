@@ -18,9 +18,13 @@ export const POST = async (req: NextRequest) => {
     const { itemId } = body;
 
     // Fetch the rent request
-    const rentRequest = await prisma.rentedItem.findUnique({
-      where: { id: itemId },
+    const rentRequest = await prisma.rentedItem.findFirst({
+      where: {
+        id: itemId,
+       ownerId: parseInt(session.user.id),
+      },
     });
+    
 
     if (!rentRequest) {
       return NextResponse.json(
@@ -39,20 +43,14 @@ export const POST = async (req: NextRequest) => {
 
     // Update the approved_status to true
     const updatedRequest = await prisma.rentedItem.update({
-      where: { id: itemId },
+      where: { id: rentRequest.id
+       },
       data: { approved_status: true },
-    });
-
-    // Update isRented status for the item
-    const isRentedStatus = await prisma.items.update({
-      where: { id: updatedRequest.itemId },
-      data: { isRented: true },
     });
 
     return NextResponse.json({
       message: "Request approved successfully",
       updatedRequest,
-      isRentedStatus,
     });
   } catch (error) {
     console.error("Error approving rent request:", error);

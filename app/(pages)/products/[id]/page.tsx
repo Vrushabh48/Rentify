@@ -67,6 +67,7 @@ export default function ProductDetailsPage() {
       });
 
       alert("Request for rent sent to the owner successfully.");
+      router.push('/status')
       console.log("Request response:", response.data);
     } catch (error) {
       console.error("Error sending rent request:", error);

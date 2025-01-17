@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface ApprovalCardProp {
   productDataProp: {
@@ -15,6 +16,7 @@ interface ApprovalCardProp {
 export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
 
   const {id, itemId, renterId, startDate, endDate } = productDataProp;
+  const router = useRouter();
 
   const handleApprove = async () => {
     try {
@@ -23,6 +25,7 @@ export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
       });
       alert("Request Approved Successfully");
       console.log(`Approved request for item ${itemId} by renter ${renterId}`);
+      router.push('/approvalrequests');
     } catch (error) {
       console.error("Error approving request:", error);
       alert("Failed to approve the request. Please try again.");
@@ -36,6 +39,7 @@ export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
         id,
       });
       alert("Request Rejected Successfully");
+      router.push('/approvalrequests');
       console.log(`Rejected request for item ${itemId} by renter ${renterId}`);
     } catch (error) {
       console.error("Error rejecting request:", error);

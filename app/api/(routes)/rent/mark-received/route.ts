@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
-  const { itemId } = await req.json();
+  const { itemId, cost } = await req.json();
   const userId = session.user.id;
 
   if (!itemId) {
@@ -28,6 +28,22 @@ export const POST = async (req: NextRequest) => {
   }
 
   try {
+
+    const updatedItem = await prisma.items.update({
+      where: {
+        id: parseInt(itemId),
+      },
+      data: {
+        isRented: false,
+        rentedfor:{
+            increment: 1
+        },
+        earnings:{
+          increment:cost
+        }
+      },
+    });
+
     // Remove the item from the rentedItems table
     await prisma.rentedItem.deleteMany({
       where: {
@@ -37,17 +53,6 @@ export const POST = async (req: NextRequest) => {
     });
 
     // Update the item in the items table to set isRented to false
-    const updatedItem = await prisma.items.update({
-      where: {
-        id: parseInt(itemId),
-      },
-      data: {
-        isRented: false,
-        rentedfor:{
-            increment: 1
-        }
-      },
-    });
 
     return NextResponse.json(
       {

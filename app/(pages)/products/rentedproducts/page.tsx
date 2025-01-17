@@ -10,6 +10,7 @@ interface Product {
   ownerId: number;
   startDate: Date;
   endDate: Date;
+  cost: number;
   approved_status: boolean | null;
 }
 
@@ -70,11 +71,12 @@ export default function Products() {
 }
 
 function ProductCard({ product }: { product: Product }) {
-  const { itemId, renterId, ownerId, startDate, endDate } = product;
+  const { itemId, renterId, ownerId, startDate, endDate, cost } = product;
   const handleClick = async () => {
     try {
         const update = await axios.post('http://localhost:3000/api/rent/mark-received', {
             itemId: product.itemId, // Wrap itemId in an object
+            cost: product.cost 
         });
         console.log(update);
         alert("Item Received Back Successfully.");
@@ -89,6 +91,7 @@ function ProductCard({ product }: { product: Product }) {
       <h2 className="text-lg font-semibold">Item ID: {itemId}</h2>
       <p className="text-sm text-gray-600">Renter ID: {renterId}</p>
       <p className="text-sm text-gray-600">Owner ID: {ownerId}</p>
+      <p className="text-sm text-gray-600">Cost for Rent: {cost}</p>
       <p className="text-sm text-gray-600">
         Start Date: {new Date(startDate).toLocaleDateString()}
       </p>

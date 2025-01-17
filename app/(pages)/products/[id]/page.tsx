@@ -64,6 +64,7 @@ export default function ProductDetailsPage() {
         itemId: productDetails?.id,
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
+        cost: (((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1) * productDetails.rent_amount)
       });
 
       alert("Request for rent sent to the owner successfully.");
@@ -140,14 +141,16 @@ export default function ProductDetailsPage() {
               </div>
 
               <div style={{ marginTop: "20px" }}>
-                {startDate && endDate ? (
-                  <p>
-                    Selected Range: {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}
-                  </p>
-                ) : (
-                  <p>Select a date range</p>
-                )}
-              </div>
+  {startDate && endDate ? (
+    <div>
+      Selected Range: {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()} <br />
+      Total Days: {(endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1} days
+      <p>Total Cost of {(endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1} days is ${((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1) * productDetails.rent_amount}</p>
+    </div>
+  ) : (
+    <p>Select a date range</p>
+  )}
+</div>
             </div>
 
             <button

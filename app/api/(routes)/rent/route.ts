@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
 
   try {
     const body = await req.json();
-    const { itemId, startDate, endDate } = body;
+    const { itemId, startDate, endDate, cost } = body;
 
     // Validate required fields
     if (!itemId || !startDate || !endDate) {
@@ -66,7 +66,8 @@ export const POST = async (req: NextRequest) => {
         renterId: parseInt(session.user.id),
         ownerId: item.UserId,
         startDate: new Date(startDate), // Ensure dates are properly formatted
-        endDate: new Date(endDate),     // Ensure dates are properly formatted
+        endDate: new Date(endDate), 
+        cost: cost   // Ensure dates are properly formatted
       },
     });
 

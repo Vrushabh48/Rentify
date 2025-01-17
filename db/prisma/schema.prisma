@@ -17,6 +17,7 @@ model Items {
   min_days    Int?
   address     String
   rentedfor   Int?         @default(0)
+  earnings    Int          @default(0)
   deposit     Int?
   isRented    Boolean      @default(false)
   location    String?
@@ -33,6 +34,7 @@ model RentedItem {
   ownerId         Int
   startDate       DateTime
   endDate         DateTime
+  cost            Int
   approved_status Boolean?
   Items           Items    @relation("ItemRentals", fields: [itemId], references: [id])
   Owner           User     @relation("OwnerRelation", fields: [ownerId], references: [id])

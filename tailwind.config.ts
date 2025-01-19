@@ -8,6 +8,11 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'poppins': ['Poppins', 'serif'],
+        'parkinsans': ['Parkinsans', 'serif'],
+        'nunito': ["Nunito Sans", 'serif']
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

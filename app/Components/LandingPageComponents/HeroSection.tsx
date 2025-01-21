@@ -2,8 +2,10 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const HeroSection = () => {
+  const router = useRouter();
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Gradient Background */}
@@ -77,10 +79,10 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <button className="px-8 py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-bold rounded-xl hover:shadow-lg hover:shadow-cyan-500/25 transform hover:-translate-y-1 transition-all duration-300">
+              <button onClick={()=> {router.push('/products')}} className="px-8 py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-bold rounded-xl hover:shadow-lg hover:shadow-cyan-500/25 transform hover:-translate-y-1 transition-all duration-300">
                 Start Renting
               </button>
-              <button className="px-8 py-4 bg-transparent border-2 border-cyan-400 text-cyan-400 font-bold rounded-xl hover:bg-cyan-400/10 transform hover:-translate-y-1 transition-all duration-300">
+              <button onClick={()=> {router.push('/addProduct')}} className="px-8 py-4 bg-transparent border-2 border-cyan-400 text-cyan-400 font-bold rounded-xl hover:bg-cyan-400/10 transform hover:-translate-y-1 transition-all duration-300">
                 List Your Items
               </button>
             </motion.div>

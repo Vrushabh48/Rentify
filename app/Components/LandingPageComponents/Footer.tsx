@@ -63,7 +63,7 @@ export default function Footer(){
     </div>
   </div>
   <p className="text-center text-gray-500 text-sm mt-8">
-    © Copyright 2021 JustRent
+    © Copyright 2024 Made by Vrushabh Patil
   </p>
 </footer>
 

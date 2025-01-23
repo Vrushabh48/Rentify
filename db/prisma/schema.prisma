@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Items {
+  id          Int          @id @default(autoincrement())
+  name        String
+  category    String
+  description String?
+  imgLink     String?
+  rent_amount Int?
+  min_days    Int?
+  address     String
+  rentedfor   Int?         @default(0)
+  earnings    Int          @default(0)
+  deposit     Int?
+  isRented    Boolean      @default(false)
+  location    String?
+  UserId      Int
+  User        User         @relation(fields: [UserId], references: [id])
+  Reviews     Reviews[]
+  RentedItems RentedItem[] @relation("ItemRentals")
+}
+
+model RentedItem {
+  id              Int      @id @default(autoincrement())
+  itemId          Int
+  renterId        Int
+  ownerId         Int
+  startDate       DateTime
+  endDate         DateTime
+  cost            Int
+  approved_status Boolean?
+  Items           Items    @relation("ItemRentals", fields: [itemId], references: [id])
+  Owner           User     @relation("OwnerRelation", fields: [ownerId], references: [id])
+  Renter          User     @relation("RenterRelation", fields: [renterId], references: [id])
+}
+
+model Reviews {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  review String
+  rating Float?
+  itemId Int
+  Items  Items  @relation(fields: [itemId], references: [id])
+  User   User   @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id       Int          @id @default(autoincrement())
+  name     String?
+  email    String       @unique
+  phone    String?
+  age      Int?
+  gender   Gender?
+  password String
+  Items    Items[]
+  Reviews  Reviews[]
+  Rentals  RentedItem[] @relation("RenterRelation") // Rentals as a Renter
+  Owner    RentedItem[] @relation("OwnerRelation")  // Rentals as an Owner
+}
+
+
+enum Gender {
+  Male
+  Female
+}
+

@@ -9,7 +9,7 @@ const HeroSection = () => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-purple-700 to-violet-600">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-600 via-slate-800 to-gray-900">
       <div className='ml-12'>
       <img src="https://www.rentify.io/images/logo/rentify.svg" alt="JustRent Logo" className="w-[200px] h-[150px]" />
       </div>

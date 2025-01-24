@@ -7,69 +7,88 @@ import prisma from "../../../../db";
 export const GET = async () => {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    return NextResponse.json(
-      {
-        message: "You are not logged in",
-      },
-      { status: 401 } // Explicit status for unauthorized
-    );
+  if (!session || !session.user?.id) {
+      return NextResponse.json(
+          { message: "You are not logged in!" },
+          { status: 401 } // Unauthorized
+      );
   }
 
-  const userId = parseInt(session.user.id, 10); // Ensure the ID is a number
-  const profile = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
+  const userId = parseInt(session.user.id, 10);
 
-  if (!profile) {
-    return NextResponse.json(
-      {
-        message: "Profile not found",
-      },
-      { status: 404 } // Explicit status for not found
-    );
-  }
+  try {
+      const profile = await prisma.user.findUnique({
+          where: {
+              id: userId,
+          },
+      });
 
-  return NextResponse.json({ profile }); // Correct API response format
-};
-
-
-export const POST = async (req: NextRequest) => {
-    const session = await getServerSession(authOptions);
-
-    if(!session){
-        return NextResponse.json({
-            message: "You are not logged in!",
-        },{
-            status: 401
-        })
-    }
-
-    try {
-        const body = await req.json();
-        const { profile } = body;
-  
-        // Merge the updated profile data
-        const update = await prisma.user.update({
-            where: {
-                id: parseInt(session.user.id)
-            },
-            data: profile
-        })
-
-        console.log(update);
-  
-        return NextResponse.json(
-            {
-              message: 'Profile updated successfully',
-              profile: update,
-            },
-            { status: 200 }
+      if (!profile) {
+          return NextResponse.json(
+              { message: "Profile not found." },
+              { status: 404 } // Not Found
           );
-      } catch (error) {
-        console.log(error);
       }
 
-}
+      return NextResponse.json(
+          { profile },
+          { status: 200 } // OK
+      );
+  } catch (error) {
+      console.error("Error fetching profile:", error);
+
+      return NextResponse.json(
+          { message: "An error occurred while fetching the profile." },
+          { status: 500 } // Internal Server Error
+      );
+  }
+};
+
+export const POST = async (req: NextRequest) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user?.id) {
+      return NextResponse.json(
+          { message: "You are not logged in!" },
+          { status: 401 } // Unauthorized
+      );
+  }
+
+  try {
+      const body = await req.json();
+      const { profile } = body;
+
+      if (!profile) {
+          return NextResponse.json(
+              { message: "Invalid request. Profile data is required." },
+              { status: 400 } // Bad Request
+          );
+      }
+
+      const userId = parseInt(session.user.id, 10); // Ensure ID is a number
+
+      const update = await prisma.user.update({
+          where: {
+              id: userId,
+          },
+          data: profile, // Ensure profile matches Prisma schema
+      });
+
+      console.log("Profile updated:", update);
+
+      return NextResponse.json(
+          {
+              message: "Profile updated successfully",
+              profile: update,
+          },
+          { status: 200 } // OK
+      );
+  } catch (error) {
+      console.error("Error updating profile:", error);
+
+      return NextResponse.json(
+          { message: "An error occurred while updating the profile." },
+          { status: 500 } // Internal Server Error
+      );
+  }
+};

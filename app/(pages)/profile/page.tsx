@@ -11,15 +11,18 @@ export default function Profile() {
     age: 0,
     gender: "",
   });
-  const [IsEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/profile");
-        setProfileData(response.data.profile); // Assuming API response contains a `profile` object
+        setProfileData(response.data.profile);
       } catch (e) {
         console.error(e);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -27,125 +30,130 @@ export default function Profile() {
   }, []);
 
   const handleEditToggle = () => {
-    setIsEditing(true);
+    setIsEditing(!isEditing);
   };
-
-const handleInputChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-) => {
-  const { name, value } = e.target;
-
-  // Convert `age` to a number if the field being updated is `age`
-  setProfileData({
-    ...profileData,
-    [name]: name === "age" ? Number(value) : value,
-  });
-};
-
-const handleagechange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-) => {
-  const { name, value } = e.target;
-
-  // Convert `age` to a number if the field being updated is `age`
-  setProfileData({
-    ...profileData,
-    [name]: name === "age" ? Number(value) : value,
-  });
-};
-
-
+//@ts-ignore
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData({
+      ...profileData,
+      [name]: name === "age" ? Number(value) : value,
+    });
+  };
 
   const handleSaveChanges = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/profile", {
+      await axios.post("http://localhost:3000/api/profile", {
         profile: profileData,
       });
-      console.log("Profile updated successfully:", response.data);
       setIsEditing(false);
     } catch (e) {
       console.error("Failed to update profile:", e);
     }
   };
+
   return (
-    <div>
-      <h1>Profile Page</h1>
-      <div>
-        <h2>Profile Details</h2>
-        <p>Name: {profileData.name}</p>
-        <p>Email: {profileData.email}</p>
-        <p>Phone: {profileData.phone}</p>
-        <p>Age: {profileData.age}</p>
-        <p>Gender: {profileData.gender}</p>
-      </div>
-      <div>
-      <h1>Profile Page</h1>
-      <div>
-        <h2>Profile Details</h2>
-        {IsEditing ? (
-          <>
-            <div>
-              <label htmlFor="name">Name:</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={profileData.name || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="phone">Phone:</label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={profileData.phone || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="age">Age:</label>
-              <input
-                type="number"
-                id="age"
-                name="age"
-                value={profileData.age || 0}
-                onChange={handleagechange}
-              />
-            </div>
-            <div>
-              <label htmlFor="gender">Gender:</label>
-              <select
-                id="gender"
-                name="gender"
-                value={profileData.gender || ""}
-                onChange={handleInputChange}
-              >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <button onClick={handleSaveChanges}>Save Changes</button>
-          </>
+    <div className="min-h-screen bg-gradient-to-r from-white to-slate-300 flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Profile Page</h1>
+        
+        {loading ? (
+          <div className="animate-pulse">
+            <div className="h-6 bg-gray-200 rounded mb-2"></div>
+            <div className="h-6 bg-gray-200 rounded mb-2"></div>
+            <div className="h-6 bg-gray-200 rounded mb-2"></div>
+            <div className="h-6 bg-gray-200 rounded mb-2"></div>
+            <div className="h-6 bg-gray-200 rounded mb-2"></div>
+          </div>
         ) : (
           <>
-            <p>Name: {profileData.name}</p>
-            <p>Email: {profileData.email}</p>
-            <p>Phone: {profileData.phone}</p>
-            <p>Age: {profileData.age}</p>
-            <p>Gender: {profileData.gender}</p>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Name:</label>
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="name"
+                  value={profileData.name}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500"
+                />
+              ) : (
+                <p className="text-lg font-semibold">{profileData.name}</p>
+              )}
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Email:</label>
+              <p className="text-lg font-semibold">{profileData.email}</p>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Phone:</label>
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="phone"
+                  value={profileData.phone}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500"
+                />
+              ) : (
+                <p className="text-lg font-semibold">{profileData.phone}</p>
+              )}
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Age:</label>
+              {isEditing ? (
+                <input
+                  type="number"
+                  name="age"
+                  value={profileData.age}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500"
+                />
+              ) : (
+                <p className="text-lg font-semibold">{profileData.age}</p>
+              )}
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Gender:</label>
+              {isEditing ? (
+                <select
+                  name="gender"
+                  value={profileData.gender || ""}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              ) : (
+                <p className="text-lg font-semibold">{profileData.gender}</p>
+              )}
+            </div>
+
+            <button
+              onClick={isEditing ? handleSaveChanges : handleEditToggle}
+              className={`mt-4 px-4 py-2 text-white rounded-md ${isEditing ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'}`}
+            >
+              {isEditing ? "Save Changes" : "Edit Profile"}
+            </button>
+
+            {isEditing && (
+              <button
+                onClick={handleEditToggle}
+                className="mt-2 ml-2 px-4 py-2 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            )}
           </>
         )}
-        <button onClick={handleEditToggle}>
-          {IsEditing ? "Cancel" : "Edit Profile"}
-        </button>
       </div>
-    </div>
-    <div>
-        
-    </div>
     </div>
   );
 }

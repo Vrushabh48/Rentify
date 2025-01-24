@@ -63,7 +63,7 @@ export const GET = async () => {
             { status: 200 } // OK
         );
     } catch (error) {
-        console.error("Error fetching products:", error);
+        console.log("No Products", error);
         return NextResponse.json(
             { message: "An error occurred while fetching products." },
             { status: 500 } // Internal Server Error

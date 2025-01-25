@@ -10,12 +10,13 @@ interface ApprovalCardProp {
     renterId: number;
     startDate: Date;
     endDate: Date;
+    cost: number;
   };
 }
 
 export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
 
-  const {id, itemId, renterId, startDate, endDate } = productDataProp;
+  const {id, itemId, renterId, startDate, endDate, cost } = productDataProp;
   const router = useRouter();
 
   const handleApprove = async () => {
@@ -49,11 +50,14 @@ export function ApprovalCard({ productDataProp }: ApprovalCardProp) {
   
 
   return (
-    <div className="border rounded-lg p-4 shadow-md">
+    <div className="border rounded-lg p-4 shadow-xl">
       <h2 className="text-lg font-semibold">Approval Request</h2>
       <div className="mt-2">
         <p>
           <strong>Item ID:</strong> {itemId}
+        </p>
+        <p>
+          <strong>Total Earnings: $</strong> {cost}
         </p>
         <p>
           <strong>Renter ID:</strong> {renterId}

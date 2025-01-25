@@ -13,6 +13,7 @@ export default function Profile() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [saving, setsaving] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -42,6 +43,7 @@ export default function Profile() {
   };
 
   const handleSaveChanges = async () => {
+    setsaving(true);
     try {
       await axios.post("http://localhost:3000/api/profile", {
         profile: profileData,
@@ -49,6 +51,8 @@ export default function Profile() {
       setIsEditing(false);
     } catch (e) {
       console.error("Failed to update profile:", e);
+    } finally{
+      setsaving(false)
     }
   };
 
@@ -141,6 +145,7 @@ export default function Profile() {
               className={`mt-4 px-4 py-2 text-white rounded-md ${isEditing ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'}`}
             >
               {isEditing ? "Save Changes" : "Edit Profile"}
+              {saving ? "Saving" : ""}
             </button>
 
             {isEditing && (

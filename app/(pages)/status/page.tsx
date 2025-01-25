@@ -57,7 +57,7 @@ function StatusCard({ productDataProp }: StatusCardProps) {
         await axios.post("http://localhost:3000/api/rent/approve/status/accepted", {
           itemId,
         });
-        alert("Request Approved Successfully");
+        alert("You have received the item");
         console.log(`Approved request for item ${itemId} by renter ${renterId}`);
       } catch (error) {
         console.error("Error approving request:", error);
@@ -107,7 +107,7 @@ function StatusCard({ productDataProp }: StatusCardProps) {
                   : "bg-red-500 hover:bg-red-600"
               }`}
             >
-              OK
+              Get item
             </button>
           )}
         </div>

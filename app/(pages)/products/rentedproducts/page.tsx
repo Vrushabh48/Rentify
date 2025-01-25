@@ -71,27 +71,40 @@ export default function Products() {
 }
 
 function ProductCard({ product }: { product: Product }) {
-    const { itemId, renterId, ownerId, startDate, endDate, cost } = product;
-  
-    const handleClick = async () => {
-      try {
-        const update = await axios.post('http://localhost:3000/api/rent/mark-received', {
-          itemId: product.itemId,
-          cost: product.cost 
-        });
-        console.log(update);
-        alert("Item Received Back Successfully.");
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
-    return (
+  const { itemId, renterId, ownerId, startDate, endDate, cost } = product;
+  const [marking, setMarking] = useState(false);
+
+  const handleClick = async () => {
+    setMarking(true); // Show loader
+    try {
+      const update = await axios.post("http://localhost:3000/api/rent/mark-received", {
+        itemId: product.itemId,
+        cost: product.cost,
+      });
+      console.log(update);
+      alert("Item Received Back Successfully.");
+    } catch (error) {
+      console.log(error);
+      alert("Failed to mark the item as received. Please try again.");
+    } finally {
+      setMarking(false); // Hide loader
+    }
+  };
+
+  return (
+    <div className="">
+      <h1 className="text-2xl font-semibold lg:text-3xl pb-3">My Rented Products</h1>
       <div className="border border-gray-300 rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
         <h2 className="text-xl font-bold text-gray-800 mb-2">Item ID: {itemId}</h2>
-        <p className="text-sm text-gray-600 mb-1">Renter ID: <span className="font-medium">{renterId}</span></p>
-        <p className="text-sm text-gray-600 mb-1">Owner ID: <span className="font-medium">{ownerId}</span></p>
-        <p className="text-sm text-gray-600 mb-1">Cost for Rent: <span className="font-medium">${cost.toFixed(2)}</span></p>
+        <p className="text-sm text-gray-600 mb-1">
+          Renter ID: <span className="font-medium">{renterId}</span>
+        </p>
+        <p className="text-sm text-gray-600 mb-1">
+          Owner ID: <span className="font-medium">{ownerId}</span>
+        </p>
+        <p className="text-sm text-gray-600 mb-1">
+          Cost for Rent: <span className="font-medium">${cost.toFixed(2)}</span>
+        </p>
         <p className="text-sm text-gray-600 mb-1">
           Start Date: <span className="font-medium">{new Date(startDate).toLocaleDateString()}</span>
         </p>
@@ -99,14 +112,15 @@ function ProductCard({ product }: { product: Product }) {
           End Date: <span className="font-medium">{new Date(endDate).toLocaleDateString()}</span>
         </p>
         <div>
-          <button 
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200"
+          <button
+            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200 disabled:opacity-50"
             onClick={handleClick}
+            disabled={marking} // Disable button when loading
           >
-            Mark Item as Received
+            {marking ? "Processing..." : "Mark Item as Received"}
           </button>
         </div>
       </div>
-    );
-  }
-  
+    </div>
+  );
+}

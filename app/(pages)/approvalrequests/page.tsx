@@ -9,6 +9,7 @@ interface Product {
   itemId: number;
   renterId: number;
   ownerId: number;
+  cost: number;
   startDate: Date; // Keep this as string if dates are in ISO format
   endDate: Date;
   approved_status: boolean | null; // Include null for pending approvals

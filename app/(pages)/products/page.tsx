@@ -49,7 +49,7 @@ export default function Products() {
   }, []);
 
   return (
-    <div className="grid lg:grid-cols-3 grid-cols-1 items-center">
+    <div className="grid lg:grid-cols-3 grid-cols-1 items-center mt-8 gap-5">
       {productData.length > 0 ? (
         productData.map((product) => (
           <ProductCard key={product.id} productDataprop={product} />

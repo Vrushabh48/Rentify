@@ -71,36 +71,42 @@ export default function Products() {
 }
 
 function ProductCard({ product }: { product: Product }) {
-  const { itemId, renterId, ownerId, startDate, endDate, cost } = product;
-  const handleClick = async () => {
-    try {
+    const { itemId, renterId, ownerId, startDate, endDate, cost } = product;
+  
+    const handleClick = async () => {
+      try {
         const update = await axios.post('http://localhost:3000/api/rent/mark-received', {
-            itemId: product.itemId, // Wrap itemId in an object
-            cost: product.cost 
+          itemId: product.itemId,
+          cost: product.cost 
         });
         console.log(update);
         alert("Item Received Back Successfully.");
-    } catch (error) {
+      } catch (error) {
         console.log(error);
-    }
-};
-
-
-  return (
-    <div className="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-      <h2 className="text-lg font-semibold">Item ID: {itemId}</h2>
-      <p className="text-sm text-gray-600">Renter ID: {renterId}</p>
-      <p className="text-sm text-gray-600">Owner ID: {ownerId}</p>
-      <p className="text-sm text-gray-600">Cost for Rent: {cost}</p>
-      <p className="text-sm text-gray-600">
-        Start Date: {new Date(startDate).toLocaleDateString()}
-      </p>
-      <p className="text-sm text-gray-600">
-        End Date: {new Date(endDate).toLocaleDateString()}
-      </p>
-      <div>
-        <button className="p-1 bg-slate-200" onClick={handleClick}>Mark the item received back.</button>
+      }
+    };
+  
+    return (
+      <div className="border border-gray-300 rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+        <h2 className="text-xl font-bold text-gray-800 mb-2">Item ID: {itemId}</h2>
+        <p className="text-sm text-gray-600 mb-1">Renter ID: <span className="font-medium">{renterId}</span></p>
+        <p className="text-sm text-gray-600 mb-1">Owner ID: <span className="font-medium">{ownerId}</span></p>
+        <p className="text-sm text-gray-600 mb-1">Cost for Rent: <span className="font-medium">${cost.toFixed(2)}</span></p>
+        <p className="text-sm text-gray-600 mb-1">
+          Start Date: <span className="font-medium">{new Date(startDate).toLocaleDateString()}</span>
+        </p>
+        <p className="text-sm text-gray-600 mb-4">
+          End Date: <span className="font-medium">{new Date(endDate).toLocaleDateString()}</span>
+        </p>
+        <div>
+          <button 
+            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200"
+            onClick={handleClick}
+          >
+            Mark Item as Received
+          </button>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+  

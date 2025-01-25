@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
@@ -77,7 +77,13 @@ export default function ProductDetailsPage() {
       setRequest(true);
       router.push("/status");
       console.log("Request response:", response.data);
-    } catch (error) {
+    } catch (e) {
+      const error = e as AxiosError;
+      if(error.response?.status === 401){
+        window.location.href = '/api/auth/signin'
+      }else{
+        console.log("Failed to Load the page")
+      }
       console.error("Error sending rent request:", error);
       alert("Failed to send the rent request. Please try again.");
     } finally {

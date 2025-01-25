@@ -1,7 +1,7 @@
 "use client"
 
 import { ApprovalCard } from "../../components/ApprovalCard";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 interface Product {
@@ -23,8 +23,11 @@ export default function ApprovalRequest() {
       try {
         const { data } = await axios.get("http://localhost:3000/api/rent/approve");
         setProductDetails(data.approvalRequest); // Extract approvalRequest from the response
-      } catch (error) {
-        console.log("Error Fetching the Approval Requests", error);
+      } catch (e) {
+        const error = e as AxiosError;
+        if(error.response?.status === 401){
+          window.location.href = '/api/auth/signin'
+        }
       }
     };
 

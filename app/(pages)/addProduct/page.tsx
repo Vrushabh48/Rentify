@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export default function AddProduct() {
   const [product, setProduct] = useState({
@@ -47,9 +47,13 @@ export default function AddProduct() {
         deposit: 0,
         location: "",
       });
-    } catch (error) {
-      console.error("Error adding product:", error);
-      alert("Error adding product. Please try again.");
+    } catch (e) {
+      const error = e as AxiosError;
+      if(error.response?.status === 401){
+        window.location.href = '/api/auth/signin'
+      }else{
+        console.log("Failed to Load the page")
+      }
     }
   };
 

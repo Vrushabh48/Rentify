@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 interface Product {
@@ -27,8 +27,15 @@ export default function Products() {
         setProductData(products);
         localStorage.setItem("productData", JSON.stringify(products));
         setError(null); // Clear any previous errors
-      } catch (error) {
-        console.error("Error fetching products:", error);
+      } catch (e) {
+        const error = e as AxiosError;
+
+        if (error.response?.status === 401) {
+    // Redirect to sign-in page if unauthorized
+    window.location.href = "/api/auth/signin";
+  } else {
+    console.error("You are not logged in!", error);
+  }
         setError("Failed to load rented items. Please try again later.");
       } finally {
         setLoading(false);

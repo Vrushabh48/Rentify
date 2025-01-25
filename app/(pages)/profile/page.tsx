@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 export default function Profile() {
   const [profileData, setProfileData] = useState({
@@ -19,9 +19,15 @@ export default function Profile() {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/profile");
+
         setProfileData(response.data.profile);
       } catch (e) {
-        console.error(e);
+        const error = e as AxiosError;
+        if(error.response?.status === 401){
+          window.location.href = '/api/auth/signin'
+        }else{
+          console.log("Failed to Load the page")
+        }
       } finally {
         setLoading(false);
       }

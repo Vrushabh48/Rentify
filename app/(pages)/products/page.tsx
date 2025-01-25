@@ -3,6 +3,7 @@
 import { ProductCard } from "../../components/ProductCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { AxiosError } from "axios";
 
 interface Product {
   id: number;
@@ -27,8 +28,14 @@ export default function Products() {
         const products = data.products || [];
         setProductData(products);
         localStorage.setItem("productData", JSON.stringify(products));
-      } catch (error) {
-        console.error("Error fetching products:", error);
+      } catch (e: unknown) {
+        const error = e as AxiosError;
+        if (error.response?.status === 401) {
+          // Redirect to sign-in page if unauthorized
+          window.location.href = "/api/auth/signin";
+        } else {
+          console.error("Failed to update profile:", e);
+        }
       }
     };
 

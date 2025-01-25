@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 interface Product {
@@ -21,8 +21,13 @@ export default function ApprovalRequest() {
       try {
         const { data } = await axios.get("http://localhost:3000/api/rent/approve/status");
         setProductDetails(data.approvalRequest); // Extract approvalRequest from the response
-      } catch (error) {
-        console.error("Error fetching approval requests:", error);
+      } catch (e) {
+        const error = e as AxiosError;
+        if(error.response?.status === 401){
+          window.location.href = '/api/auth/signin'
+        }else{
+          console.log("Failed to Load the page")
+        }
       }
     };
 

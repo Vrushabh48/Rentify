@@ -27,6 +27,8 @@ export default function ApprovalRequest() {
         const error = e as AxiosError;
         if(error.response?.status === 401){
           window.location.href = '/api/auth/signin'
+        }else{
+          console.log("Failed to Load the page")
         }
       }
     };

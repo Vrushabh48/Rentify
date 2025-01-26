@@ -1,5 +1,6 @@
 "use client";
 
+import Alert from "@/app/components/Alert";
 import Navbar from "@/app/components/Navbar";
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
@@ -91,10 +92,10 @@ function ProductCard({ product }: { product: Product }) {
         cost: product.cost,
       });
       console.log(update);
-      alert("Item Received Back Successfully.");
+      <Alert message={"You have now received the item back."} />
     } catch (error) {
       console.log(error);
-      alert("Failed to mark the item as received. Please try again.");
+      <Alert message="Connection Error! Please try again!" />
     } finally {
       setMarking(false); // Hide loader
     }

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import Navbar from '@/app/components/Navbar';
+import Alert from '@/app/components/Alert';
 
 export default function AddProduct() {
   const [product, setProduct] = useState({
@@ -35,7 +36,7 @@ export default function AddProduct() {
       });
 
       console.log("Product added successfully:", response.data);
-      alert("Product added successfully!");
+      <Alert message='Product Added Successfully!'/>
 
       setProduct({
         name: "",

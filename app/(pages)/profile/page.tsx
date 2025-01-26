@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axios, {AxiosError} from "axios";
 import Navbar from "@/app/components/Navbar";
+import Alert from "@/app/components/Alert";
 
 export default function Profile() {
   const [profileData, setProfileData] = useState({
@@ -56,6 +57,7 @@ export default function Profile() {
         profile: profileData,
       });
       setIsEditing(false);
+      <Alert message="Profile Updated!" />
     } catch (e) {
       console.error("Failed to update profile:", e);
     } finally{

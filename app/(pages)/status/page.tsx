@@ -1,5 +1,6 @@
 "use client";
 
+import Alert from "@/app/components/Alert";
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
@@ -62,11 +63,11 @@ function StatusCard({ productDataProp }: StatusCardProps) {
         await axios.post("http://localhost:3000/api/rent/approve/status/accepted", {
           itemId,
         });
-        alert("You have received the item");
+        <Alert message="Your Request is Approved"/>
         console.log(`Approved request for item ${itemId} by renter ${renterId}`);
       } catch (error) {
         console.error("Error approving request:", error);
-        alert("Failed to approve the request. Please try again.");
+        <Alert message="Failed to approve the request! Please try again."/>
       }
     };
   
@@ -75,11 +76,11 @@ function StatusCard({ productDataProp }: StatusCardProps) {
         await axios.post("http://localhost:3000/api/rent/approve/status/rejected", {
           itemId,
         });
-        alert("Request Rejected Successfully");
+        <Alert message="Request Rejected Successfully"/>
         console.log(`Rejected request for item ${itemId} by renter ${renterId}`);
       } catch (error) {
         console.error("Error rejecting request:", error);
-        alert("Failed to reject the request. Please try again.");
+        <Alert message="Failed to reject the request"/>
       }
     };
   

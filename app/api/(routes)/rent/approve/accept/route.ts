@@ -52,11 +52,11 @@ export const POST = async (req: NextRequest) => {
       message: "Request approved successfully",
       updatedRequest,
     });
-  } catch (error) {
-    console.error("Error approving rent request:", error);
+  } catch (error: unknown) {
+    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      { message: "An error occurred while processing the request" },
-      { status: 500 }
+        { message: "An error occurred." },
+        { status: 500 }
     );
   }
 };

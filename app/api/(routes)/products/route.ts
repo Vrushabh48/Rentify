@@ -62,11 +62,11 @@ export const GET = async () => {
             { products },
             { status: 200 } // OK
         );
-    } catch (error) {
-        console.log("No Products", error);
+    } catch (error: unknown) {
+        console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
         return NextResponse.json(
-            { message: "An error occurred while fetching products." },
-            { status: 500 } // Internal Server Error
+            { message: "An error occurred while fetching Products." },
+            { status: 500 }
         );
     }
 };

@@ -29,11 +29,11 @@ export const GET = async (req: NextRequest, context: { params: { id: string } })
     }
 
     return NextResponse.json({ product });
-  } catch (error) {
-    console.error(error);
+  } catch (error: unknown) {
+    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      { message: "Error fetching product details" },
-      { status: 500 }
+        { message: "An error occurred while fetching Product." },
+        { status: 500 }
     );
   }
 };

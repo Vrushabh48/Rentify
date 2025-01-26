@@ -34,13 +34,12 @@ export const GET = async () => {
           { profile },
           { status: 200 } // OK
       );
-  } catch (error) {
-      console.error("Error fetching profile:", error);
-
-      return NextResponse.json(
-          { message: "An error occurred while fetching the profile." },
-          { status: 500 } // Internal Server Error
-      );
+  } catch (error: unknown) {
+    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
+    return NextResponse.json(
+        { message: "An error occurred while fetching Profile Details." },
+        { status: 500 }
+    );
   }
 };
 
@@ -83,12 +82,11 @@ export const POST = async (req: NextRequest) => {
           },
           { status: 200 } // OK
       );
-  } catch (error) {
-      console.error("Error updating profile:", error);
-
-      return NextResponse.json(
-          { message: "An error occurred while updating the profile." },
-          { status: 500 } // Internal Server Error
-      );
+  } catch (error: unknown) {
+    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
+    return NextResponse.json(
+        { message: "An error occurred while updating Profile " },
+        { status: 500 }
+    );
   }
 };

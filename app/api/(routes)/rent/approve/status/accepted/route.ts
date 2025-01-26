@@ -48,14 +48,11 @@ export const POST = async (req: NextRequest) => {
       message: `You collected the Item`,
       updatedItem,
     });
-  } catch (error) {
-    console.error("Error handling request:", error);
+  } catch (error: unknown) {
+    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      {
-        message: "An error occurred while resolving your request!",
-        error
-      },
-      { status: 500 }
+        { message: "An error occurred." },
+        { status: 500 }
     );
   }
 };

@@ -27,7 +27,11 @@ export const GET = async () => {
             {products},
             {status: 200} //OK
         );
-    } catch (e) {
-        console.log(e);
+    } catch (error: unknown) {
+      console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
+      return NextResponse.json(
+          { message: "An error occurred." },
+          { status: 500 }
+      );
     }
 }

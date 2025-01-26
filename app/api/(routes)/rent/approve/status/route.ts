@@ -31,11 +31,11 @@ export const GET = async () => {
     });
 
     return NextResponse.json({ approvalRequest });
-  } catch (error) {
-    console.error("Error fetching approval requests:", error);
+  } catch (error: unknown) {
+    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      { message: "An error occurred while fetching approval requests." },
-      { status: 500 }
+        { message: "An error occurred." },
+        { status: 500 }
     );
   }
 };

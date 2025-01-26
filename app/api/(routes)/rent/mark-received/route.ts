@@ -61,15 +61,11 @@ export const POST = async (req: NextRequest) => {
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Error returning the item:", error);
-
+  } catch (error: unknown) {
+    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      {
-        message: "Failed to return the item.",
-        error,
-      },
-      { status: 500 }
+        { message: "An error occurred." },
+        { status: 500 }
     );
   }
 };

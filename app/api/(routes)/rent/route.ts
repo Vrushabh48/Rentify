@@ -76,15 +76,11 @@ export const POST = async (req: NextRequest) => {
       message: "Rent request created successfully.",
       rentedItem,
     });
-  } catch (error) {
-    console.error(error);
-
-    // Return a 500 response in case of server errors
+  } catch (error: unknown) {
+    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      {
-        message: "An error occurred.",
-      },
-      { status: 500 }
+        { message: "An error occurred." },
+        { status: 500 }
     );
   }
 };

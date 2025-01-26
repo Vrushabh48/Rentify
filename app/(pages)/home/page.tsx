@@ -1,31 +1,14 @@
 "use client"
-import { useRouter } from "next/navigation"
+import Navbar from "@/app/components/Navbar";
 
 export default function Home() {
-    const router = useRouter();
     return (
         <div className="min-h-screen bg-gray-100 text-gray-800 font-sans overflow-x-hidden">
-            <header className="text-center py-10">
+            <Navbar />
+            <header className="text-center py-28">
                 <h1 className="text-4xl font-bold text-blue-700 mb-4">Welcome to Rentify</h1>
                 <p className="text-lg text-gray-600 mb-4">Your go-to platform for renting the things you need</p>
                 <p className="text-sm text-gray-500 mb-6">Rent smarter, not harder</p>
-                <div className="flex justify-center gap-6">
-                    <button
-                        className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-500 transition duration-300"
-                        onClick={() => { router.push('/profile') }}>
-                        Manage Profile
-                    </button>
-                    <button
-                        className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-500 transition duration-300"
-                        onClick={() => { router.push('/products') }}>
-                        Explore Products
-                    </button>
-                    <button
-                        className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-500 transition duration-300"
-                        onClick={() => { router.push('/approvalrequests') }}>
-                        Approval Requests
-                    </button>
-                </div>
             </header>
 
             <section className="py-16 px-6 bg-white">

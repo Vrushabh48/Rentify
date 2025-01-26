@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
-import { ProductCard } from "../../components/ProductCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
+import { ProductCard } from "../../components/ProductCard";
+import Link from "next/link";
 
 interface Product {
   id: number;
@@ -34,7 +35,7 @@ export default function Products() {
           // Redirect to sign-in page if unauthorized
           window.location.href = "/api/auth/signin";
         } else {
-          console.error("Failed to update profile:", e);
+          console.error("Failed to fetch products:", e);
         }
       }
     };
@@ -56,14 +57,43 @@ export default function Products() {
   }, []);
 
   return (
-    <div className="grid lg:grid-cols-3 grid-cols-1 items-center mt-8 gap-5">
-      {productData.length > 0 ? (
-        productData.map((product) => (
-          <ProductCard key={product.id} productDataprop={product} />
-        ))
-      ) : (
-        <p>No products available.</p>
-      )}
+    <div className="min-h-screen bg-gray-50">
+      {/* Navbar */}
+      <nav className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 flex items-center justify-between">
+          <div className="text-2xl font-bold text-gray-800">Rentify</div>
+          <div className="space-x-6">
+            <Link href="/home" className="text-gray-600 hover:text-gray-800">
+              Home
+            </Link>
+            <Link href="/products" className="text-gray-600 hover:text-gray-800">
+              Products
+            </Link>
+            <Link
+              href="/api/auth/signin"
+              className="text-gray-600 hover:text-gray-800"
+            >
+              Sign Out
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto p-4 lg:p-8">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">Our Products</h1>
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {productData.length > 0 ? (
+            productData.map((product) => (
+              <ProductCard key={product.id} productDataprop={product} />
+            ))
+          ) : (
+            <p className="col-span-full text-center text-gray-600">
+              No products available.
+            </p>
+          )}
+        </div>
+      </main>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Navbar from "@/app/components/Navbar";
 
 interface ProductDetails {
   id: number;
@@ -93,6 +94,7 @@ export default function ProductDetailsPage() {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-xl rounded-lg">
+      <Navbar />
       {productDetails.imgLink && (
         <div className="mb-6 relative w-full h-64">
           <img

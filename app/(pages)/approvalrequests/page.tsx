@@ -1,5 +1,6 @@
 "use client"
 
+import Navbar from "@/app/components/Navbar";
 import { ApprovalCard } from "../../components/ApprovalCard";
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
@@ -37,7 +38,9 @@ export default function ApprovalRequest() {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
+    <div>
+      <Navbar />
+    <div className="container mx-auto p-6">
       <h1 className="text-xl font-bold mb-4">Approval Requests</h1>
       {productDetails.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -48,6 +51,7 @@ export default function ApprovalRequest() {
       ) : (
         <p className="text-gray-500">No approval requests found.</p>
       )}
+    </div>
     </div>
   );
 }

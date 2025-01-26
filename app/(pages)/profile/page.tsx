@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios, {AxiosError} from "axios";
+import Navbar from "@/app/components/Navbar";
 
 export default function Profile() {
   const [profileData, setProfileData] = useState({
@@ -63,6 +64,8 @@ export default function Profile() {
   };
 
   return (
+    <div>
+      <Navbar />
     <div className="min-h-screen bg-gradient-to-r from-white to-slate-300 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Profile Page</h1>
@@ -165,6 +168,7 @@ export default function Profile() {
           </>
         )}
       </div>
+    </div>
     </div>
   );
 }

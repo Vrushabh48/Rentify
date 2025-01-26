@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
+import Navbar from '@/app/components/Navbar';
 
 export default function AddProduct() {
   const [product, setProduct] = useState({
@@ -59,6 +60,7 @@ export default function AddProduct() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <Navbar />
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-2xl p-6">
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">Add Product</h1>
         

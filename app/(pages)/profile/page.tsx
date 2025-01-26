@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import axios, {AxiosError} from "axios";
 import Navbar from "@/app/components/Navbar";
-import Alert from "@/app/components/Alert";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Profile() {
   const [profileData, setProfileData] = useState({
@@ -57,7 +57,7 @@ export default function Profile() {
         profile: profileData,
       });
       setIsEditing(false);
-      <Alert message="Profile Updated!" />
+     toast("Profile Updated!")
     } catch (e) {
       console.error("Failed to update profile:", e);
     } finally{
@@ -70,6 +70,15 @@ export default function Profile() {
       <Navbar />
     <div className="min-h-screen bg-gradient-to-r from-white to-slate-300 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+      <ToastContainer
+        position="top-right" // Adjust position (e.g., top-left, bottom-right)
+        autoClose={5000} // Auto close after 5 seconds
+        hideProgressBar={false} // Show or hide progress bar
+        newestOnTop={true} // Display newest toast on top
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Profile Page</h1>
         
         {loading ? (

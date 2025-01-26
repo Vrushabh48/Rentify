@@ -85,7 +85,7 @@ export const POST = async (req: NextRequest) => {
   } catch (error: unknown) {
     console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-        { message: "An error occurred while updating Profile " },
+        { message: "An error occurred while updating Profile. " },
         { status: 500 }
     );
   }

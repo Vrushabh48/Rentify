@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "@/app/components/Navbar";
+import { toast, ToastContainer } from "react-toastify";
 
 interface ProductDetails {
   id: number;
@@ -59,7 +60,7 @@ export default function ProductDetailsPage() {
   const handleRequest = async () => {
     try {
       if (!startDate || !endDate) {
-        alert("Please select both start and end dates.");
+        toast("Please select both start and end dates.");
         return;
       }
 
@@ -74,7 +75,7 @@ export default function ProductDetailsPage() {
           productDetails.rent_amount,
       });
 
-      alert("Request for rent sent to the owner successfully.");
+      toast("Request for rent sent to the owner successfully.");
       setRequest(true);
       router.push("/status");
       console.log("Request response:", response.data);
@@ -86,7 +87,7 @@ export default function ProductDetailsPage() {
         console.log("Failed to Load the page")
       }
       console.error("Error sending rent request:", error);
-      alert("Failed to send the rent request. Please try again.");
+      toast("Failed to send the rent request. Please try again.");
     } finally {
       setRequestLoading(false); // Stop loading
     }
@@ -95,6 +96,15 @@ export default function ProductDetailsPage() {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-xl rounded-lg">
       <Navbar />
+      <ToastContainer
+        position="top-right" // Adjust position (e.g., top-left, bottom-right)
+        autoClose={5000} // Auto close after 5 seconds
+        hideProgressBar={false} // Show or hide progress bar
+        newestOnTop={true} // Display newest toast on top
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
       {productDetails.imgLink && (
         <div className="mb-6 relative w-full h-64">
           <img

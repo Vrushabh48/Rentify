@@ -1,9 +1,8 @@
 "use client";
-
-import Alert from "@/app/components/Alert";
 import Navbar from "@/app/components/Navbar";
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 interface Product {
   id: number;
@@ -65,6 +64,15 @@ export default function Products() {
   return (
     <div className="container mx-auto px-4 py-8">
       <Navbar />
+      <ToastContainer
+        position="top-right" // Adjust position (e.g., top-left, bottom-right)
+        autoClose={5000} // Auto close after 5 seconds
+        hideProgressBar={false} // Show or hide progress bar
+        newestOnTop={true} // Display newest toast on top
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
       {error ? (
         <p className="text-red-500 text-center">{error}</p>
       ) : productData.length > 0 ? (
@@ -92,10 +100,10 @@ function ProductCard({ product }: { product: Product }) {
         cost: product.cost,
       });
       console.log(update);
-      <Alert message={"You have now received the item back."} />
+      toast("You have now received the item back.")
     } catch (error) {
       console.log(error);
-      <Alert message="Connection Error! Please try again!" />
+      toast("Connection Error! Please try again!")
     } finally {
       setMarking(false); // Hide loader
     }

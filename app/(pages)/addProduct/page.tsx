@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import Navbar from '@/app/components/Navbar';
-import Alert from '@/app/components/Alert';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function AddProduct() {
   const [product, setProduct] = useState({
@@ -36,7 +36,7 @@ export default function AddProduct() {
       });
 
       console.log("Product added successfully:", response.data);
-      <Alert message='Product Added Successfully!'/>
+      toast('Product Added Successfully!')
 
       setProduct({
         name: "",
@@ -63,6 +63,15 @@ export default function AddProduct() {
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <Navbar />
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-2xl p-6">
+      <ToastContainer
+        position="top-right" // Adjust position (e.g., top-left, bottom-right)
+        autoClose={5000} // Auto close after 5 seconds
+        hideProgressBar={false} // Show or hide progress bar
+        newestOnTop={true} // Display newest toast on top
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">Add Product</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

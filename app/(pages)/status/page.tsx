@@ -1,8 +1,8 @@
 "use client";
 
-import Alert from "@/app/components/Alert";
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 interface Product {
   id: number;
@@ -37,6 +37,15 @@ export default function ApprovalRequest() {
 
   return (
     <div className="container mx-auto p-4">
+      <ToastContainer
+        position="top-right" // Adjust position (e.g., top-left, bottom-right)
+        autoClose={5000} // Auto close after 5 seconds
+        hideProgressBar={false} // Show or hide progress bar
+        newestOnTop={true} // Display newest toast on top
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
       <h1 className="text-xl font-bold mb-4">Status of Requested items:</h1>
       {productDetails.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -63,11 +72,11 @@ function StatusCard({ productDataProp }: StatusCardProps) {
         await axios.post("http://localhost:3000/api/rent/approve/status/accepted", {
           itemId,
         });
-        <Alert message="Your Request is Approved"/>
+        toast("You Received the item")
         console.log(`Approved request for item ${itemId} by renter ${renterId}`);
       } catch (error) {
         console.error("Error approving request:", error);
-        <Alert message="Failed to approve the request! Please try again."/>
+        toast("Failed to approve the request! Please try again.")
       }
     };
   
@@ -76,11 +85,11 @@ function StatusCard({ productDataProp }: StatusCardProps) {
         await axios.post("http://localhost:3000/api/rent/approve/status/rejected", {
           itemId,
         });
-        <Alert message="Request Rejected Successfully"/>
+        toast("You have Acknowledged the status.")
         console.log(`Rejected request for item ${itemId} by renter ${renterId}`);
       } catch (error) {
         console.error("Error rejecting request:", error);
-        <Alert message="Failed to reject the request"/>
+        toast("Failed to reject the request")
       }
     };
   
@@ -113,7 +122,7 @@ function StatusCard({ productDataProp }: StatusCardProps) {
                   : "bg-red-500 hover:bg-red-600"
               }`}
             >
-              Get item
+              OK
             </button>
           )}
         </div>

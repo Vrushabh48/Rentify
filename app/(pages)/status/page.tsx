@@ -36,7 +36,7 @@ export default function ApprovalRequest() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">Approval Requests</h1>
+      <h1 className="text-xl font-bold mb-4">Status of Requested items:</h1>
       {productDetails.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {productDetails.map((product) => (
@@ -44,7 +44,7 @@ export default function ApprovalRequest() {
           ))}
         </div>
       ) : (
-        <p className="text-gray-500">No approval requests found.</p>
+        <p className="text-gray-500">No requests found.</p>
       )}
     </div>
   );
@@ -85,7 +85,7 @@ function StatusCard({ productDataProp }: StatusCardProps) {
   
     return (
       <div className="border rounded-lg p-4 shadow-md">
-        <h2 className="text-lg font-semibold">Approval Request</h2>
+        <h2 className="text-lg font-semibold">Status of Requested item: </h2>
         <div className="mt-2">
           <p>
             <strong>Item ID:</strong> {itemId}

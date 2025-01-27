@@ -38,10 +38,10 @@ export default function ApprovalRequest() {
   return (
     <div className="container mx-auto p-4">
       <ToastContainer
-        position="top-right" // Adjust position (e.g., top-left, bottom-right)
-        autoClose={5000} // Auto close after 5 seconds
-        hideProgressBar={false} // Show or hide progress bar
-        newestOnTop={true} // Display newest toast on top
+        position="top-right" 
+        autoClose={5000}
+        hideProgressBar={false} 
+        newestOnTop={true}
         closeOnClick
         pauseOnHover
         draggable

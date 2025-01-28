@@ -10,7 +10,7 @@ export default function Navbar() {
     return (
         <nav className="bg-blue-700 text-white p-4 fixed w-full z-10 shadow-md">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
-                <h1 className="text-2xl font-bold cursor-pointer" onClick={() => router.push("/")}>Rentify</h1>
+                <h1 className="text-2xl font-bold cursor-pointer" onClick={() => router.push("/home")}>Rentify</h1>
                 <div className="hidden md:flex gap-6">
                     <button
                         className="px-4 py-2 hover:bg-blue-500 rounded"
@@ -35,6 +35,18 @@ export default function Navbar() {
                         onClick={() => router.push("/status")}
                     >
                         Status
+                    </button>
+                    <button
+                        className="px-4 py-2 hover:bg-blue-500 rounded"
+                        onClick={() => router.push("/products/rentedproducts")}
+                    >
+                        My Rented Products
+                    </button>
+                    <button
+                        className="px-4 py-2 hover:bg-blue-500 rounded"
+                        onClick={() => router.push("/addProduct")}
+                    >
+                        Add a Product
                     </button>
                 </div>
                 <div className="md:hidden">

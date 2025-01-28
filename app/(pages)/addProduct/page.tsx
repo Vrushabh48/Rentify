@@ -60,8 +60,11 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className='gap-3 grid grid-cols-1'>
+      <div className=''>
       <Navbar />
+      </div>
+    <div className="min-h-screen bg-gray-50 py-8 px-4 mt-12">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-2xl p-6">
       <ToastContainer
         position="top-right" // Adjust position (e.g., top-left, bottom-right)
@@ -239,6 +242,7 @@ export default function AddProduct() {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }

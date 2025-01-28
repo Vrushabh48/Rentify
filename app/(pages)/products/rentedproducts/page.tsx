@@ -62,8 +62,11 @@ export default function Products() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="gap-3 grid grid-cols-1">
+      <div>
       <Navbar />
+      </div>
+    <div className="container mx-auto px-4 py-8 mt-11">
       <ToastContainer
         position="top-right" // Adjust position (e.g., top-left, bottom-right)
         autoClose={5000} // Auto close after 5 seconds
@@ -82,8 +85,9 @@ export default function Products() {
           ))}
         </div>
       ) : (
-        <p className="text-center text-gray-500">No rented items available.</p>
+        <p className="text-center text-gray-500">Currently you do not have any of your item rented.</p>
       )}
+    </div>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Featured() {
   return (
     <div>
@@ -9,7 +11,7 @@ export default function Featured() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 p-5">
             {/* Film & Photography */}
             <div className="relative group">
-              <img
+              <Image
                 src="https://i0.wp.com/casualphotophile.com/wp-content/uploads/2021/01/cameras-dario.jpg?fit=1920%2C1080&ssl=1"
                 alt="Film & Photography"
                 className="w-full h-56 object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
@@ -21,7 +23,7 @@ export default function Featured() {
 
             {/* Electronics */}
             <div className="relative group">
-              <img
+              <Image
                 src="https://c8.alamy.com/comp/WXYTBE/set-of-kitchen-appliance-electronics-for-home-WXYTBE.jpg"
                 alt="Electronics"
                 className="w-full h-56 object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
@@ -33,7 +35,7 @@ export default function Featured() {
 
             {/* Furniture */}
             <div className="relative group">
-              <img
+              <Image
                 src="https://shagunarts.com/media/wysiwyg/ssa-1214-a_1.jpg"
                 alt="Furniture"
                 className="w-full h-56 object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
@@ -45,7 +47,7 @@ export default function Featured() {
 
             {/* Equipments */}
             <div className="relative group">
-              <img
+              <Image
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEfORknOrz2Ng3KjU5AVfEm0XhXiUOeomefkC4aaQFxdWLEc1dZwiJmEeZQNfNyq_luWo&usqp=CAU"
                 alt="Equipments"
                 className="w-full h-56 object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"

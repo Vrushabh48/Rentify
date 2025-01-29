@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation"; // Use useSearchParams to acc
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "@/app/components/Navbar";
+import { Suspense } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
 interface ProductDetails {
@@ -95,6 +96,7 @@ export default function ProductDetailsPage() {
   };
 
   return (
+    <Suspense>
     <div className="min-h-screen flex flex-col">
       <div className="">
       <Navbar />
@@ -210,5 +212,6 @@ export default function ProductDetailsPage() {
       </div>
     </div>
     </div>
+    </Suspense>
   );
 }

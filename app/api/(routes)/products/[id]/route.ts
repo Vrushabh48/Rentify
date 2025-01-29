@@ -1,19 +1,19 @@
 import { authOptions } from "@/app/lib/auth";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import {prisma} from '../../../../lib/prisma'
+import prisma from "@/db";
 
-export const GET = async (req: NextRequest, context: { params: { id: string } }) => {
+export const GET = async (req: NextRequest, { params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return NextResponse.json({
-      message: "You are not logged in!",
-    }, { status: 401 });
+    return NextResponse.json(
+      { message: "You are not logged in!" },
+      { status: 401 }
+    );
   }
 
-  // Await params before destructuring
-  const { id } = await context.params;
+  const { id } = params;
 
   try {
     const product = await prisma.items.findUnique({
@@ -32,8 +32,8 @@ export const GET = async (req: NextRequest, context: { params: { id: string } })
   } catch (error: unknown) {
     console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-        { message: "An error occurred while fetching Product." },
-        { status: 500 }
+      { message: "An error occurred while fetching Product." },
+      { status: 500 }
     );
   }
 };

@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 const HeroSection = () => {
   const router = useRouter();
@@ -43,7 +42,7 @@ const HeroSection = () => {
       {/* Header with Logo and Button */}
       <div className="relative z-10 flex justify-between items-center px-1 sm:px-12 py-2">
         {/* Logo */}
-        <Image
+        <img
           src="https://www.rentify.io/images/logo/rentify.svg"
           alt="JustRent Logo"
           className="w-[150px] sm:w-[200px] h-auto"

@@ -1,6 +1,5 @@
 'use client'
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
@@ -34,7 +33,7 @@ export function ProductCard({ productDataprop }: ProductCardProps) {
       className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl"
     >
       <div className="relative w-full h-48">
-        <Image 
+        <img 
           src={imgLink} 
           className="object-cover h-[200px] w-[350px]" 
           alt={name} 

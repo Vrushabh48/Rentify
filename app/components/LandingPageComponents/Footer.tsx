@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 
 export default function Footer() {
   return (
@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="container mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 text-gray-800 lg:m-0 px-6 md:px-12">
           {/* Logo and Contact */}
           <div className="space-y-3">
-            <Image
+            <img
               src="https://www.rentify.io/images/logo/rentify.svg"
               alt="Rentify Logo"
               className="w-20 h-20"
@@ -122,31 +122,33 @@ export default function Footer() {
 
           {/* Social Media */}
           <div className="space-y-3">
-            <h4 className="text-lg font-semibold text-yellow-600">Social Media</h4>
+            <h4 className="text-lg font-semibold text-yellow-600">
+              Social Media
+            </h4>
             <div className="flex items-center space-x-4">
               <a href="#">
-                <Image
+                <img
                   src="https://static.vecteezy.com/system/resources/thumbnails/018/930/698/small/facebook-logo-facebook-icon-transparent-free-png.png"
                   alt="Facebook Logo"
                   className="w-6 h-6"
                 />
               </a>
               <a href="#">
-                <Image
+                <img
                   src="https://w7.pngwing.com/pngs/782/574/png-transparent-x-com-logo-twitter-rebranding-tech-companies-thumbnail.png"
                   alt="Twitter Logo"
                   className="w-6 h-6"
                 />
               </a>
               <a href="#">
-                <Image
+                <img
                   src="https://img.freepik.com/premium-vector/instagram-vector-logo-icon-social-media-logotype_901408-395.jpg?semt=ais_hybrid"
                   alt="Instagram Logo"
                   className="w-6 h-6"
                 />
               </a>
               <a href="#">
-                <Image
+                <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfRQj_W8078FCL2-vDL5oWTJIVLhz8OH5g-A&s"
                   alt="LinkedIn Logo"
                   className="w-6 h-6"

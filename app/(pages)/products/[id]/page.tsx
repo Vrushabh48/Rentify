@@ -7,7 +7,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "@/app/components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
-import Image from "next/image";
 
 interface ProductDetails {
   id: number;
@@ -95,8 +94,11 @@ export default function ProductDetailsPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-xl rounded-lg">
+    <div className="min-h-screen flex flex-col">
+      <div className="">
       <Navbar />
+      </div>
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-xl rounded-lg">
       {/**Notification */}
       <ToastContainer
         position="top-right" // Adjust position (e.g., top-left, bottom-right)
@@ -109,7 +111,7 @@ export default function ProductDetailsPage() {
       />
       {productDetails.imgLink && (
         <div className="mb-6 relative w-full h-64">
-          <Image
+          <img
             src={productDetails.imgLink}
             alt={`Image of ${productDetails.name}`}
             className="h-[200px] w-[300px] object-cover"
@@ -205,6 +207,7 @@ export default function ProductDetailsPage() {
           </>
         )}
       </div>
+    </div>
     </div>
   );
 }

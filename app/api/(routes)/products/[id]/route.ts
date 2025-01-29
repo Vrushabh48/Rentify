@@ -3,7 +3,10 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/db";
 
-export async function GET(req: NextRequest, { params }: { params: Record<string, string> }) {
+export async function GET(
+  req: NextRequest, 
+  context: { params: { id: string } }
+) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -13,7 +16,7 @@ export async function GET(req: NextRequest, { params }: { params: Record<string,
     );
   }
 
-  const id = params.id;
+  const { id } = await context.params;
 
   try {
     const product = await prisma.items.findUnique({

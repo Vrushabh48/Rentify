@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "@/app/components/Navbar";
 import { Suspense } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { useRouter } from "next/router";
+import { useRouter, useParams } from "next/navigation";
 
 interface ProductDetails {
   id: number;
@@ -30,10 +30,12 @@ export default function ProductDetailsPage() {
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [request, setRequest] = useState(false);
   const router = useRouter();
-  const { id: productId } = router.query;
+  const params = useParams();
+
+  const productId = params?.id; // Extract productId from route parameters
 
   useEffect(() => {
-    if (!productId || typeof productId !== "string") return;
+    if (!productId) return;
 
     const fetchProductDetails = async () => {
       try {
@@ -138,7 +140,7 @@ export default function ProductDetailsPage() {
               Back to Products
             </button>
           </div>
-          
+
           <div className="mt-6 text-center">
             {productDetails.isRented ? (
               <h4 className="text-red-600">This item is currently rented.</h4>

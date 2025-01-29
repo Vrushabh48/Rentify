@@ -2,7 +2,8 @@
 
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation"; // Use useSearchParams to access query parameters
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "@/app/components/Navbar";
@@ -29,29 +30,29 @@ export default function ProductDetailsPage() {
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [request, setRequest] = useState(false);
   const router = useRouter();
-  const params = useParams();
+  const searchParams = useSearchParams(); // This will give you access to query params
 
   useEffect(() => {
     const fetchProductDetails = async () => {
-      try {
-        if (!params || !params.id) {
-          throw new Error("Invalid product ID");
-        }
+      const id = searchParams.get("id"); // Get the product ID from the query params
+      if (!id) return;
 
-        const { data } = await axios.get(
-          `http://localhost:3000/api/products/${params.id}`
-        );
-        setProductDetails(data.product || null);
+      try {
+        const response = await fetch(`http://localhost:3000/api/products/detail?id=${id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch product");
+        }
+        const data = await response.json();
+        setProductDetails(data.product);
       } catch (error) {
-        console.error("Error fetching product details:", error);
-        router.push("/"); // Redirect to home if product is not found
+        console.error("Error fetching product:", error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchProductDetails();
-  }, [params, router]);
+  }, [searchParams]); // Make sure to run the effect when query params change
 
   if (loading) return <div className="text-center text-xl">Loading...</div>;
 
@@ -180,7 +181,7 @@ export default function ProductDetailsPage() {
                     <p>
                       Total Cost of{" "}
                       {(endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1} days is{" "}
-                      $
+                      $$
                       {((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1) *
                         productDetails.rent_amount}
                     </p>

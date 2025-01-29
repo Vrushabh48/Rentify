@@ -3,10 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/db";
 
-export async function GET(
-  req: NextRequest, 
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -16,11 +13,18 @@ export async function GET(
     );
   }
 
-  const { id } = params;
+  const productId = req.nextUrl.searchParams.get("id");
+
+  if (!productId || isNaN(Number(productId))) {
+    return NextResponse.json(
+      { message: "Invalid or missing product ID" },
+      { status: 400 }
+    );
+  }
 
   try {
     const product = await prisma.items.findUnique({
-      where: { id: parseInt(id, 10) },
+      where: { id: parseInt(productId, 10) },
       include: {
         User: true,
         Reviews: true,

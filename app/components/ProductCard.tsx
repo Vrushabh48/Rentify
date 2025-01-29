@@ -22,7 +22,7 @@ export function ProductCard({ productDataprop }: ProductCardProps) {
 
   const handleClick = () => {
     // Redirect to the dynamic route for this product
-    router.push(`/products/${productDataprop.id}`);
+    router.push(`/products/details?id=${productDataprop.id}`);
   };
 
   const { name, description, rent_amount, location, imgLink, isRented } = productDataprop;

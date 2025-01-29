@@ -5,7 +5,7 @@ import prisma from "@/db";
 
 export async function GET(
   req: NextRequest, 
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   const session = await getServerSession(authOptions);
 
@@ -16,7 +16,7 @@ export async function GET(
     );
   }
 
-  const { id } = await context.params;
+  const { id } = params;
 
   try {
     const product = await prisma.items.findUnique({
@@ -32,7 +32,7 @@ export async function GET(
     }
 
     return NextResponse.json({ product });
-  } catch (error: unknown) {
+  } catch (error) {
     console.error("Error fetching product:", error instanceof Error ? error.message : error);
     return NextResponse.json(
       { message: "An error occurred while fetching the product." },

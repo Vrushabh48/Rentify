@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/db";
 
-export const GET = async (req: NextRequest, { params }: { params: { id: string } }) => {
+export async function GET(req: NextRequest, { params }: { params: Record<string, string> }) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -13,14 +13,14 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
     );
   }
 
-  const { id } = params;
+  const id = params.id;
 
   try {
     const product = await prisma.items.findUnique({
-      where: { id: parseInt(id, 10) }, // Ensure ID is parsed as an integer
+      where: { id: parseInt(id, 10) },
       include: {
-        User: true,     // Include user details if needed
-        Reviews: true,  // Include reviews if needed
+        User: true,
+        Reviews: true,
       },
     });
 
@@ -30,10 +30,10 @@ export const GET = async (req: NextRequest, { params }: { params: { id: string }
 
     return NextResponse.json({ product });
   } catch (error: unknown) {
-    console.error("Error fetching approval requests:", error instanceof Error ? error.message : error);
+    console.error("Error fetching product:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      { message: "An error occurred while fetching Product." },
+      { message: "An error occurred while fetching the product." },
       { status: 500 }
     );
   }
-};
+}

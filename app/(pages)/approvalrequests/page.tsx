@@ -11,7 +11,7 @@ interface Product {
   renterId: number;
   ownerId: number;
   cost: number;
-  startDate: Date; // Keep this as string if dates are in ISO format
+  startDate: Date;
   endDate: Date;
   approved_status: boolean | null; // Include null for pending approvals
 }
@@ -23,7 +23,7 @@ export default function ApprovalRequest() {
     const fetchApprovalRequest = async () => {
       try {
         const { data } = await axios.get("http://localhost:3000/api/rent/approve");
-        setProductDetails(data.approvalRequest); // Extract approvalRequest from the response
+        setProductDetails(data.approvalRequest);
       } catch (e) {
         const error = e as AxiosError;
         if(error.response?.status === 401){

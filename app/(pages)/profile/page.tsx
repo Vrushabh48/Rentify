@@ -41,8 +41,8 @@ export default function Profile() {
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
   };
-//@ts-ignore
-  const handleInputChange = (e) => {
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setProfileData({
       ...profileData,

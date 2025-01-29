@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from "@/app/components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
+import Image from "next/image";
 
 interface ProductDetails {
   id: number;
@@ -96,6 +97,7 @@ export default function ProductDetailsPage() {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-xl rounded-lg">
       <Navbar />
+      {/**Notification */}
       <ToastContainer
         position="top-right" // Adjust position (e.g., top-left, bottom-right)
         autoClose={5000} // Auto close after 5 seconds
@@ -107,7 +109,7 @@ export default function ProductDetailsPage() {
       />
       {productDetails.imgLink && (
         <div className="mb-6 relative w-full h-64">
-          <img
+          <Image
             src={productDetails.imgLink}
             alt={`Image of ${productDetails.name}`}
             className="h-[200px] w-[300px] object-cover"
@@ -136,7 +138,7 @@ export default function ProductDetailsPage() {
           Back to Products
         </button>
       </div>
-
+      {/**Date Picker */}
       <div className="mt-6 text-center">
         {productDetails.isRented ? (
           <h4 className="text-red-600">This item is currently rented.</h4>
@@ -165,7 +167,7 @@ export default function ProductDetailsPage() {
                   dateFormat="yyyy/MM/dd"
                 />
               </div>
-
+              {/**Calculating Total Days based on the selected dates */}
               <div style={{ marginTop: "20px" }}>
                 {startDate && endDate ? (
                   <div>

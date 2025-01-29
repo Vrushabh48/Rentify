@@ -66,6 +66,7 @@ export default function AddProduct() {
       </div>
     <div className="min-h-screen bg-gray-50 py-8 px-4 mt-12">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-2xl p-6">
+        {/**Notification*/}
       <ToastContainer
         position="top-right" // Adjust position (e.g., top-left, bottom-right)
         autoClose={5000} // Auto close after 5 seconds

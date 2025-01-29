@@ -51,7 +51,7 @@ export default function Products() {
         setProductData(JSON.parse(cachedData));
         setFilteredData(JSON.parse(cachedData));
       }
-      fetchProducts(); // Fetch fresh data immediately
+      fetchProducts();
     };
 
     fetchDataWithCache();
@@ -64,7 +64,7 @@ export default function Products() {
   useEffect(() => {
     let filtered = productData;
 
-    // Filter by search term
+    // Filter by search
     if (searchTerm) {
       filtered = filtered.filter((product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())

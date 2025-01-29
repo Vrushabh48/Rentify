@@ -28,7 +28,7 @@ export const POST = async (req: NextRequest) => {
                 address: productData.address,
                 deposit: parseInt(productData.deposit), // Ensure deposit is an integer
                 UserId: parseInt(session.user.id), // Ensure UserId is parsed as an integer
-                ...(productData.min_days && { min_days: parseInt(productData.min_days) }), // Parse min_days if it exists
+                ...(productData.min_days && { min_days: parseInt(productData.min_days) }),
             },
         });
 

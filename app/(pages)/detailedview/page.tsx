@@ -11,7 +11,7 @@ interface ProductDetails {
   description: string;
   rent_amount: number;
   location: string;
-  imgLink?: string; // If your product has an image
+  imgLink?: string;
 }
 
 export default function ProductDetailsPage({ params }: { params: { id: string } }) {

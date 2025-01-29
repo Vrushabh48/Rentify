@@ -67,6 +67,7 @@ export default function Products() {
       <Navbar />
       </div>
     <div className="container mx-auto px-4 py-8 mt-11">
+      {/**Notification */}
       <ToastContainer
         position="top-right" // Adjust position (e.g., top-left, bottom-right)
         autoClose={5000} // Auto close after 5 seconds
@@ -109,7 +110,7 @@ function ProductCard({ product }: { product: Product }) {
       console.log(error);
       toast("Connection Error! Please try again!")
     } finally {
-      setMarking(false); // Hide loader
+      setMarking(false);
     }
   };
 
@@ -137,7 +138,7 @@ function ProductCard({ product }: { product: Product }) {
           <button
             className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200 disabled:opacity-50"
             onClick={handleClick}
-            disabled={marking} // Disable button when loading
+            disabled={marking}
           >
             {marking ? "Processing..." : "Mark Item as Received"}
           </button>
